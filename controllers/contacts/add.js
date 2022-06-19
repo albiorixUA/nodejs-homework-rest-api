@@ -1,13 +1,12 @@
+const { Contact, joiContactSchema } = require("../../models");
 const { createError } = require("../../helpers");
-const { contactsSchema } = require("../../schemas");
-const contacts = require("../../models/contacts");
 
 const add = async (req, res) => {
-  const { error } = contactsSchema.validate(req.body);
+  const { error } = joiContactSchema.validate(req.body);
   if (error) {
     throw createError(400);
   }
-  const result = await contacts.addContact(req.body);
+  const result = await Contact.create(req.body);
   res.status(201).json(result);
 };
 
