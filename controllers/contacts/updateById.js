@@ -1,17 +1,13 @@
+const { Contact, joiContactSchema } = require("../../models");
 const { createError } = require("../../helpers");
-const contacts = require("../../models/contacts");
-const { contactsSchema } = require("../../schemas");
 
 const updateById = async (req, res) => {
-  const { error } = contactsSchema.validate(req.body);
+  const { id } = req.params;
+  const { error } = joiContactSchema.validate(req.body);
   if (error) {
     throw createError(400);
   }
-  const { id } = req.params;
-  const result = await contacts.updateContact(id, req.body);
-  if (!result) {
-    throw createError(404);
-  }
+  const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
   res.json(result);
 };
 
