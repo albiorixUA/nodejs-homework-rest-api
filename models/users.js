@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 
@@ -24,8 +24,11 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    avatar: {
+      String
+    }
   },
-  { versionKey: false }
+  {versionKey: false}
 );
 
 userSchema.methods.setPassword = function (password) {
