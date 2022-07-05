@@ -11,12 +11,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"))
 
 app.use("/api/contacts", contactsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 
-const { DB_HOST, PORT = 3000 } = process.env;
+const {DB_HOST, PORT = 3000} = process.env;
 
 mongoose
   .connect(DB_HOST)
@@ -27,6 +28,6 @@ mongoose
   });
 
 app.use((err, req, res, next) => {
-  const { status = 500 } = err;
-  res.status(status).json({ message: err.message });
+  const {status = 500} = err;
+  res.status(status).json({message: err.message});
 });
