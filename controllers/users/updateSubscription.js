@@ -3,7 +3,6 @@ const { createError } = require("../../helpers");
 
 const updateSubscription = async (req, res) => {
   const { _id } = req.user;
-  console.log(_id);
   const { subscription } = req.body;
   const { error } = joiSubscriptionSchema.validate({ subscription });
   if (error) {

@@ -1,4 +1,4 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 
@@ -25,10 +25,18 @@ const userSchema = Schema(
       default: null,
     },
     avatar: {
-      String
-    }
+      String,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
-  {versionKey: false}
+  { versionKey: false }
 );
 
 userSchema.methods.setPassword = function (password) {
@@ -56,6 +64,10 @@ const joiSubscriptionSchema = Joi.object({
     .required(),
 });
 
+const joiEmailSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -63,4 +75,5 @@ module.exports = {
   joiRegisterSchema,
   joiLoginSchema,
   joiSubscriptionSchema,
+  joiEmailSchema,
 };
